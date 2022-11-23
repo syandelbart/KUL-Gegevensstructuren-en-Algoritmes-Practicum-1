@@ -1,0 +1,229 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[margin=2.54cm]{geometry}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{amsmath}
+
+\setlength\parindent{0em}
+
+
+\title{Verslag Analyse Sorteeralgoritmes\\ \vspace{.3cm}\large{Gegevensstructuren en Algoritmen}}
+\author{Syan Delbart}
+\date{27 Maart 2020}
+
+
+\begin{document}
+
+
+\maketitle
+\thispagestyle{empty}
+ \newpage
+
+\tableofcontents
+
+\newpage
+
+\section{Inleiding}
+Het doel van dit verslag is om het verschil tussen drie sorteeralgoritmes uit te leggen, namelijk: quick sort, insertion sort en selection sort.
+\subsection{Introductie tot de sorteeralgoritmes}
+    \subsubsection{Quick sort}
+    Het quick sort algoritme is, ten opzichte van de twee andere algoritmes die besproken zullen worden, uniek.
+    Het algoritme werkt recursief. Oorspronkelijk start het quick sort algoritme op één grote lijst. Er zal een
+    willekeurige pivot gekozen worden (in dit verslag wordt ervan uit dat de middelste waarde als pivot wordt genomen)
+    en elk getal in de lijst zal vergeleken worden met die pivot. Hieruit ontstaan 2 groepen, namelijk een groep met getallen kleiner dan de pivot en een groep met getallen groter dan de pivot. Getallen die gelijk zijn aan de pivot mogen in één van de twee groepen gestopt worden. Het algoritme zal zich dan opnieuw uitvoeren op die twee groepen en zo zal het verder gaan tot elke groep beperkt is tot één element, en die groep dus al gesorteerd is.
+    
+    
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=13cm]{quicksort.png}
+        \caption{standaard QuickSort algoritme}
+        \label{fig:1}
+    \end{figure}    
+
+    De formule voor het verwachte aantal vergelijkingen is $\sim 2*n*ln(n)$. Deze formule slaat op een schatting en is dus niet exact. In bovenstaande grafiek wordt deze formule vergeleken met de bekomen resultaten, waar dus ook duidelijk wordt dat onze formule een redelijke benadering is.
+    
+    \subsubsection{Insertion sort}
+    Bij het insertion sort algoritme worden de getallen één voor één afgegaan. Het getal zal telkens met zijn voorganger vergeleken en verwisseld worden totdat de voorganger kleiner blijkt te zijn dan het getal zelf. Een groot verschil tussen insertion sort en selection sort is dat insertion sort afhankelijk is van de ingevoerde lijst. Hoe beter deze initieel gesorteerd is, hoe sneller dit algoritme zal uitgevoerd worden.
+    
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=13cm]{insertionsort.png}
+        \caption{insertion sort algoritme}
+        \label{fig:2}
+    \end{figure}   
+    
+    De formule voor het verwachte aantal vergelijkingen is $\sim n^2/2$. De lijnen overlappen, waardoor duidelijk wordt dat de schatting redelijk exact is vergeleken met de bekomen data.
+    
+    \subsubsection{Selection sort}
+    Het selection sort algoritme zoekt steeds naar de kleinste waarde in de lijst. Vervolgens zet die dat kleinste element vooraan, waardoor de te sorteren lijst één element kleiner wordt. Hiervoor moet er dus steeds over de hele te sorteren lijst geïtereerd worden om zo de kleinste waarde te vinden. Hierdoor is het waarschijnlijk het eenvoudigste algoritme van de drie, maar dan ook het minst efficiënte.
+    
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=13cm]{selectionsort.png}
+        \caption{Selection sort algoritme}
+        \label{fig:3}
+    \end{figure}
+    
+    De formule voor het verwachte aantal vergelijkingen is $\sim n^2/2$. Hier is de schatting exacter, waardoor de twee lijnen (Expected, Actual) vrijwel op elkaar liggen.
+    
+
+    \section{Vergelijk tussen de algoritmes}
+    Na het individueel bekijken van de algoritmes kan vastgesteld worden dat quick sort zonder twijfel het best presteert. De realiteit is dat de efficiëntie van een algoritme vaak zal afhangen van de lijst waarop het wordt uitgevoerd. Zo zal insertion sort veel beter presteren met een relatief gesorteerde lijst ten opzichte van een helemaal niet gesorteerde lijst. In de praktijk is het echter handiger om een algemene voorspelling te kunnen doen over de uitvoering van een algoritme in plaats van de duur van de sortering van elke mogelijke lijst exact op te meten.
+    
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=12.5cm]{comparedsorts.png}
+        \caption{Vergelijk tussen de algoritmes: quicksort, insertion sort, selection sort}
+        \label{fig:4}
+    \end{figure}
+    
+    Hier kan duidelijk besloten worden dat quick sort de winnaar is ten opzichte van zijn rivalen. Het aantal vergelijkingen ligt een stuk lager, maar ook de stijging is veel kleiner ten opzichte van de andere twee. Tussen insertion sort en selection sort is het nog steeds een strijd. Insertion sort zal goed presteren op vooraf semi-gesorteerde lijsten, maar heeft de omgekeerde efficiëntie wanneer het een ongesorteerde lijst betreft. Selection sort is een stuk stabieler en zal steeds een bepaald aantal vergelijkingen doen afhankelijk van de lengte van de lijst.
+    
+    \section{Doubling ratio experiment}
+        Door een doubling ratio te nemen kan ingeschat worden hoeveel tijd het extra zal vragen om een lijst te sorteren die tweemaal groter is dan de voorgaande. Om dit te kunnen berekenen wordt de formule $T(2n) / T(n)$ gebruikt, waarbij T(n) de algemene formule voor dat algoritme met n aantal elementen is.
+    
+        \subsection{Quick sort}
+        
+            Het gemiddelde van de doubling ratio van de data zou ongeveer overeen moeten komen met $\sim 1,39*2*ln2$. De onderstaande tabel illustreert dit. Het is evident dat, als er meer data is, het gemiddelde ook nauwkeuriger zal worden.
+            
+            \begin{center}
+            \begin{tabular}{ |c | c | } 
+            \hline
+            elements & doubl. ratio \\ 
+            \hline
+            200 & x \\ 
+            \hline
+            400 & 0.741694 \\ 
+            \hline
+            800 & 1.301413 \\ 
+            \hline
+            1600 & 1.654026 \\ 
+            \hline
+            3200 & 1.908104 \\ 
+            \hline
+            6400 & 2.081949 \\ 
+            \hline
+            12800 & 2.176743 \\ 
+            \hline
+            25600 & 2.102406 \\ 
+            \hline
+            Average & 1.709476 \\
+            \hline
+            Expected & $\sim$ 1.926949 \\
+            \hline
+            \end{tabular}
+            \end{center}
+        
+            Voorspelde tijd (factor) voor een verdubbeling van het aantal elementen: \\
+            Bij het voorspellen van de prestatie zijn logaritmes minder relevant, en aangezien \\ $ln(2n) / ln(n) = ln(2) = \sim1$ mogen we dit wegdenken
+           \begin{equation} \label{eq1}
+            \begin{split}
+            \frac{T(2n)}{T(n)} & = \frac{2*2n*ln(2n)}{2*n*ln(n)} \\
+             & = 2*\frac{ln(2n)}{ln(n)}\\
+             & \sim 2 
+            \end{split}
+            \end{equation}
+            Voorspelde tijd (factor) voor het verachtvoudigen van het aantal elementen: \\
+            $T(8*25600) = \sim 8 * 2550866ns = \sim 0.020406928s$ \\
+           \begin{equation} \label{eq1}
+            \begin{split}
+            \frac{T(8n)}{T(n)} & = \frac{2*8n*ln(8n)}{2*n*ln(n)} \\
+             & = 8*\frac{ln(8n)}{ln(n)}\\
+             & \sim 8 
+            \end{split}
+            \end{equation}
+            
+            \newpage
+            Ook grafisch kan dit voorgesteld worden. Aangezien het doubling ratio een schatting is, is de data niet altijd exact. In dit geval is het echter duidelijk dat bij een verdubbeling van 8000 naar 16000 elementen er een vrijwel exacte verdubbeling gebeurt in tijd. 
+            
+            \begin{figure}[H]
+                \centering
+                \includegraphics[width=13cm]{timequicksort.png}
+                \caption{doubling ratio quick sort}
+                \label{fig:5}
+            \end{figure}
+            
+            
+        \subsection{Insertion sort}
+        
+            Hier zou het gemiddelde van de doubling ratio van de data ongeveer overeen moeten komen met $\sim 4$
+            
+            \begin{center}
+            \begin{tabular}{ |c | c | } 
+            \hline
+            elements & doubl. ratio \\ 
+            \hline
+            200 & x \\ 
+            \hline
+            400 & 1.160305 \\ 
+            \hline
+            800 & 3.936527 \\ 
+            \hline
+            1600 & 3.846216 \\ 
+            \hline
+            3200 & 3.949621 \\ 
+            \hline
+            6400 & 3.979781 \\ 
+            \hline
+            12800 & 4.154944 \\ 
+            \hline
+            25600 & 4.071478 \\ 
+            \hline
+            Average & 3.585553 \\
+            \hline
+            Expected & $\sim$ 4 \\
+            \hline
+            \end{tabular}
+            \end{center}
+        
+            Voorspelde tijd (factor) voor een verdubbeling van het aantal elementen: \\
+           \begin{equation} \label{eq1}
+            \begin{split}
+            \frac{T(2n)}{T(n)} & = \frac{(2n)^2/4}{n^2/4} \\
+             & = 4* \frac{n^2/4}{n^2/4}\\
+             & \sim 4 
+            \end{split}
+            \end{equation}
+            \newpage
+            Voorspelde tijd (factor) voor het verachtvoudigen van het aantal elementen: \\
+            $T(8*25600) = \sim 64 * 736837243ns = \sim 47,1576s$ \\
+           \begin{equation} \label{eq1}
+            \begin{split}
+            \frac{T(8n)}{T(n)} & = \frac{(8n)^2/4}{n^2/4} \\
+             & = 64 * \frac{n^2/4}{n^2/4}\\
+             & \sim 64 \\
+            \end{split}
+            \end{equation}
+            
+            
+            Hier is bij de verdubbeling van 8000 naar 16000 elementen een factor van ongeveer 4 zichtbaar. 
+            
+            \begin{figure}[H]
+                \centering
+                \includegraphics[width=13cm]{timeinsertionsort.png}
+                \caption{doubling ratio insertion sort}
+                \label{fig:6}
+            \end{figure}
+            
+        \subsection{Doubling ratio $\sim n^5$}
+            Om dit op te lossen is het mogelijk om dezelfde formule te hanteren als bij de voorspelling van quick sort en insertion sort. \\
+            Voorspelde tijd (factor) voor een verdubbeling van het aantal elementen: \\
+           \begin{equation} \label{eq1}
+            \begin{split}
+            \frac{T(2n)}{T(n)} & = \frac{(2n)^5}{n^5} \\
+             & = 2^5* \frac{n^5}{n^5}\\
+             & \sim 32 
+            \end{split}
+            \end{equation}
+            
+    \section{Conclusie}
+        Het is belangrijk om experimenten uit te voeren vooraleer het algoritme geïmplementeerd wordt. In dit verslag is bewezen dat quick sort simpelweg beter presteert dan insertion \& selection sort; niet enkel de data zelf toont dit aan, maar ook de factor van tijd bij de verdubbeling van elementen. 
+
+
+
+
+
+\end{document}
